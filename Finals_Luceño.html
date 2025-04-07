@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luceño_Finals</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .tri-fold {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel {
+      padding: 3rem 2rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .intro {
+      background: linear-gradient(to right, #b2d8d8, #66b2b2);
+      color: white;
+    }
+
+    .hero-img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .mission-vision {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+    }
+
+    .mission, .vision {
+      width: 48%;
+    }
+
+    .mission strong, .vision strong {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .facilities {
+      background: url('https://www.transparenttextures.com/patterns/white-wall-3.png'), linear-gradient(to bottom, #ffffff, #dcfafa);
+      background-blend-mode: overlay;
+      background-size: cover;
+      color: #333;
+      padding: 3rem 2rem;
+    }
+
+    #newsletter {
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .newsletter {
+      background: #e6f2f2;
+    }
+
+    .content {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h1, h2 {
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    .facility {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .facility img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-right: 1rem;
+    }
+
+    .facility div {
+      flex: 1;
+    }
+
+    .testimonials blockquote {
+      font-style: italic;
+      margin-bottom: 1rem;
+      padding-left: 1rem;
+      border-left: 4px solid #66b2b2;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      padding: 0.75rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    button[type="submit"] {
+      background-color: #66b2b2;
+      color: white;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #559999;
+    }
+
+    #responseMessage {
+      color: green;
+      font-weight: bold;
+    }
+
+    .navbar {
+      background: #66b2b2;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      padding: 1rem 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: top 0.3s;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .nav-links li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links li a.active {
+      color: #ffffcc;
+    }
+
+    .nav-links li a.active::after {
+      width: 100%;
+    }
+
+    .nav-links li a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links li a:hover {
+      color: #dff;
+    }
+
+    .nav-links li a:hover::after {
+      width: 100%;
+    }
+
+    .panel {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease-out;
+    }
+
+    .panel.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .facility img,
+    .hero-img {
+      transition: transform 0.3s ease;
+    }
+
+    .facility img:hover,
+    .hero-img:hover {
+      transform: scale(1.03);
+    }
+
+    @media (min-width: 1024px) {
+      .tri-fold {
+        flex-direction: row;
+      }
+      .panel {
+        width: 33.33%;
+        height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar" id="navbar">
+    <nav>
+      <ul class="nav-links">
+        <li>
+          <a href="#intro" class="nav-link active">Intro</a>
+        </li>
+        <li>
+          <a href="#facilities" class="nav-link">Facilities</a>
+        </li>
+        <li>
+          <a href="#newsletter" class="nav-link">Newsletter</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="tri-fold">
+    <!-- Section 1 -->
+    <section class="panel intro" id="intro">
+      <div class="content">
+        <h1 id="typewriter"></h1>
+        <img src="Section 1.jpg" class="hero-img" />
+        <p>
+          <strong>Avida</strong>, delivers thoughtfully designed homes that value comfort, security, and convenience.
+        </p>
+        <div class="mission-vision">
+          <p>
+            <strong>Mission:</strong> To enrich the lives of Filipinos by providing quality homes in well-planned communities.
+          </p>
+          <p>
+            <strong>Vision:</strong> To be the most trusted brand for affordable living spaces in the Philippines.
+          </p>
+        </div>
+        <br><p>
+          <strong>What makes us different?</strong> Our strategic locations, lifestyle-centered amenities, and top-notch property management make Avida Towers more than a place to live—it's where life happens.
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 2 -->
+    <section class="panel facilities" id="facilities">
+      <div class="content">
+        <h2>Live Better With Our Amenities</h2>
+        <div class="facility">
+          <img src="Indoor Gym.jpg" alt="Fitness Gym">
+          <div>
+            <h3>Fitness Gym</h3>
+            <p>Stay active in our fully equipped fitness center exclusive to residents.</p>
+          </div>
+        </div>
+        <div class="facility">
+          <img src="Swimming Pool.jpg" alt="Resort-Style Pool">
+          <div>
+            <h3>Resort-Style Pool</h3>
+            <p>Take a refreshing dip in our relaxing pool with lounge areas and greenery.</p>
+          </div>
+        </div>
+        <div class="facility">
+          <img src="Garden.jpg" alt="Sky Garden">
+          <div>
+            <h3>Sky Garden</h3>
+            <p>Unwind in our lush, open-air garden—perfect for morning coffee or quiet evening strolls.</p>
+          </div>
+        </div>
+        <div class="facility">
+          <img src="Children's Playground.jpg" alt="Children's Play Area">
+          <div>
+            <h3>Children's Play Area</h3>
+            <p>Let kids be kids in our secure and colorful outdoor play space, designed for fun and safety.</p>
+          </div>
+        </div>
+        <div class="testimonials">
+          <h3>What Our Residents Say</h3>
+          <blockquote>"They say location is everything, but honestly, I think it’s the pool that’s keeping me here." – <em>Zaenia</em>
+          </blockquote>
+          <blockquote>"Found the perfect spot to finally take a break. Avida Towers, where even my code gets to relax." – <em>Z</em>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3 -->
+    <section class="panel newsletter" id="newsletter">
+      <div class="content">
+        <h2>Stay Updated</h2>
+        <p>Be the first to hear about us. Join our mailing list today!</p>
+        <form id="newsletterForm">
+          <input type="text" id="name" placeholder="Your Full Name" />
+          <input type="email" id="email" placeholder="Your E-mail Address" />
+          <button type="submit">Subscribe</button>
+        </form>
+        <div id="responseMessage"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("newsletterForm");
+      const nameInput = document.getElementById("name");
+      const emailInput = document.getElementById("email");
+      const response = document.getElementById("responseMessage");
+  
+      let lastScrollTop = 0;
+      const navbar = document.querySelector('.navbar');
+      
+      window.addEventListener('scroll', () => {
+        if (window.innerWidth > 1024) {  
+          let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+          
+          if (currentScroll > lastScrollTop) {
+            navbar.style.top = "-80px"; 
+          } else {
+            navbar.style.top = "0";
+          }
+          
+          lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; 
+        }
+      });
+  
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = nameInput.value.trim();
+        const email = emailInput.value.trim();
+  
+        if (name === "" || email === "") {
+          response.textContent = "All fields are required.";
+          response.style.color = "red";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          response.textContent = "Enter a valid email address.";
+          response.style.color = "red";
+        } else {
+          response.textContent = `Thanks for subscribing, ${name}!`;
+          response.style.color = "green";
+          form.reset();
+        }
+      });
+  
+      const sections = document.querySelectorAll(".panel");
+      const navLinks = document.querySelectorAll(".nav-link");
+  
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute("id");
+  
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+  
+            navLinks.forEach(link => {
+              link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+            });
+          }
+        });
+      }, {
+        threshold: 0.5
+      });
+  
+      sections.forEach(section => {
+        observer.observe(section);
+      });
+  
+      const typewriter = document.getElementById("typewriter");
+      const text = "Welcome to Avida Towers!";
+      let index = 0;
+  
+      function typeEffect() {
+        if (index < text.length) {
+          typewriter.textContent += text.charAt(index);
+          index++;
+          setTimeout(typeEffect, 60); 
+        }
+      }
+  
+      typeEffect();
+    });
+  </script>
+</body>
+</html>
